@@ -23,10 +23,10 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class AppInputRangeComponent {
-  @ViewChild('input') input: HTMLInputElement;
-  @Input() value: string | number;
+  @ViewChild('input') input!: HTMLInputElement;
+  @Input() value!: string | number;
   @Input() maxLength: number = 100;
-  @Input() title: string;
+  @Input() title!: string;
 
   @Output() changes = new EventEmitter();
 

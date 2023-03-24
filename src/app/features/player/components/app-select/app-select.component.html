@@ -1,6 +1,6 @@
 <div class="player-menu_item">
-  <span class="option-title" *ngIf="config.options?.length > 0; else titleAction">{{ config.title }}</span>
-  <ng-container *ngIf="config.options?.length > 0">
+  <span class="option-title" *ngIf="config?.options?.length > 0; else titleAction">{{ config.title }}</span>
+  <ng-container *ngIf="config?.options?.length > 0">
     <ul class="custom_select_list">
       <li
         *ngFor="let item of config.options"

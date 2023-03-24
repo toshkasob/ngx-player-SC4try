@@ -11,7 +11,7 @@
       #timeline
       class="timeline"
       [style.width.%]="
-        ((playerService.currentTrackTime$ | async) / ((playerService.fullTrackTime$ | async) / 100)).toFixed(2)
+        ((playerService.currentTrackTime$ | async)! / ((playerService.fullTrackTime$ | async)! / 100)).toFixed(2)
       "
     ></div>
     <div
@@ -37,9 +37,9 @@
       </div>
       <p class="trackTime">
         {{
-        ((playerService.currentTrackTime$ | async) | videoTime) +
+        ((playerService.currentTrackTime$ | async)! | videoTime) +
         ' / ' +
-        (playerService.fullTrackTime$ | async | videoTime)
+        ((playerService.fullTrackTime$ | async)! | videoTime)
         }}
       </p>
     </div>
@@ -59,11 +59,9 @@
       <app-input-range
         #inputVolume
         (changes)="playerService.volume$.next($event)"
-        [value]="playerService.volume$ | async"
+        [value]="(playerService.volume$ | async)!"
         title="Громкость"
       ></app-input-range>
-
-      <p (click)="openSettings()">FFFF</p>
 
       <div class="video-control player-menu">
         <svg width="26" height="26" viewBox="0 0 24 24" class="control-icon settings" fill="white">
@@ -74,7 +72,7 @@
             *ngFor="let item of playerService.playerMenu"
             [config]="item.selectConfig"
             (selected)="doAction($event)"
-            [currentValue]="playerService.currentSpeed$ | async"
+            [currentValue]="(playerService.currentSpeed$ | async)!"
           ></app-select>
         </ul>
       </div>
@@ -95,8 +93,6 @@
           "
         />
       </svg>
-      <!--яркость-->
-      <!--      <input type='range' value='100' max='200' title='Громкость' class='video-hud__element video-hud__volume' id='video-hud__filters'>-->
     </div>
   </div>
 

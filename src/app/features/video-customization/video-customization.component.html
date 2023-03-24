@@ -5,12 +5,73 @@
       <app-input-range
         class="setting-range"
         (changes)="changeSetting(item.value, $event)"
-        [value]="item.value | async"
-        [maxLength]="item.maxLength"
+        [value]="(item.value | async)!"
+        [maxLength]="item.maxLength || 100"
         title="Громкость"
       ></app-input-range>
       <p class="setting-text">{{ item.value | async }}</p>
     </ng-container>
   </div>
-  <button class="btn">Сброс</button>
+  <div class="colorblindness-wrapper" [class.active]="colorblindness">
+    <div class="colorblindness">
+      <p class="setting-text">Антидальтонизм</p>
+      <p
+        class="option-status"
+        [class.active]="colorblindness"
+        (click)="customizationService.colorblindness$.next(!colorblindness)"
+      >
+        {{ colorblindness ? 'Включено' : 'Выключено' }}
+      </p>
+    </div>
+    <div class="colorblindness" *ngIf="colorblindness">
+      <p
+        class="colorblindness-text"
+        [class.blue]="typeColorblindness === colorblindnessEnum.TRITAN"
+        (click)="customizationService.typeColorblindness$.next(colorblindnessEnum.TRITAN)"
+      >
+        'Синий'
+      </p>
+      <p
+        class="colorblindness-text"
+        [class.green]="typeColorblindness === colorblindnessEnum.DEUTAN"
+        (click)="customizationService.typeColorblindness$.next(colorblindnessEnum.DEUTAN)"
+      >
+        'Зеленый'
+      </p>
+      <p
+        class="colorblindness-text"
+        [class.red]="typeColorblindness === colorblindnessEnum.PROTAN"
+        (click)="customizationService.typeColorblindness$.next(colorblindnessEnum.PROTAN)"
+      >
+        'Красный'
+      </p>
+    </div>
+  </div>
+
+  <div class="epilepsy-wrapper" [class.active]="epilepsyProtection">
+    <div class="epilepsy-protection">
+      <p class="setting-text">Защита от эпилепсии</p>
+      <p
+        class="option-status"
+        [class.active]="epilepsyProtection"
+        (click)="toggleProtection()"
+      >
+        {{ epilepsyProtection ? 'Включено' : 'Выключено' }}
+      </p>
+    </div>
+
+
+    <div class="epilepsy-protection" *ngIf="epilepsyProtection">
+      <p class="setting-text">Тип защиты</p>
+      <p
+        class="option-status"
+        [class.active]="actionCutWithProtection"
+        (click)="toggleActionWithProtection()"
+      >
+        {{ actionCutWithProtection ? 'Вырезание' : 'Замедление' }} кадра
+      </p>
+    </div>
+  </div>
+
+  <button (click)="customizationService.resetSettings()" class="btn">Сброс</button>
 </div>

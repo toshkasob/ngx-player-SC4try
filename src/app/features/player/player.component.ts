@@ -13,6 +13,8 @@ import { PlayerService } from './services/player.service';
 import { fromEvent, interval, map, skip, switchMap, takeUntil, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DOCUMENT } from '@angular/common';
+import { EpilepsyWarningComponent } from "./components/epilepsy-warning/epilepsy-warning.component";
+import { DialogService } from "../dialog/dialog.service";
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -22,13 +24,13 @@ import { DOCUMENT } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerComponent implements AfterViewInit, OnChanges {
-  @ViewChild('playerContainer') playerContainer: ElementRef<HTMLElement>;
-  @ViewChild('player') player: ElementRef<HTMLVideoElement>;
-  @Input() src: string;
+  @ViewChild('playerContainer') playerContainer!: ElementRef<HTMLElement>;
+  @ViewChild('player') player!: ElementRef<HTMLVideoElement>;
+  @Input() src!: string;
 
   public isCustomizationOpen = false;
 
-  constructor(public playerService: PlayerService, @Inject(DOCUMENT) private document: any) {}
+  constructor(public playerService: PlayerService, @Inject(DOCUMENT) private document: any, private dialog: DialogService) {}
 
   public ngAfterViewInit(): void {
     this.initVideoStreams();
@@ -134,5 +136,19 @@ export class PlayerComponent implements AfterViewInit, OnChanges {
         untilDestroyed(this),
       )
       .subscribe();
+  }
+
+  public openSettings(): void {
+    const dialogRef = this.dialog.open(EpilepsyWarningComponent, {
+      data: {
+        team: 'SC4try',
+        event: 'TrueTechHack',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // Subscription runs after the dialog closes
+      console.log('Dialog closed!');
+    });
   }
 }

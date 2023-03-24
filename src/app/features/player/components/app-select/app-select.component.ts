@@ -23,8 +23,8 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class AppSelectComponent {
-  @Input() config: SelectInterface;
-  @Input() currentValue: number;
+  @Input() config!: SelectInterface;
+  @Input() currentValue!: number;
 
   @Output() selected = new EventEmitter<EmitSelectedValue>();
 

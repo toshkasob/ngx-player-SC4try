@@ -9,13 +9,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   providedIn: 'root',
 })
 export class PlayerService {
-  public src$ = new BehaviorSubject<string>(null);
+  public src$ = new BehaviorSubject<string>('');
   public isPlaying$ = new BehaviorSubject<boolean>(false);
 
   public volume$ = new BehaviorSubject<number>(100);
   public beforeMute: number = 100;
 
-  public mouseMove: Subscription;
+  public mouseMove!: Subscription;
   public changeControlsStyle$ = new BehaviorSubject<boolean>(false);
 
   public fullTrackTime$ = new BehaviorSubject<number>(0);

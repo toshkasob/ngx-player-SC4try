@@ -2,6 +2,7 @@ import { Directive, ElementRef } from '@angular/core';
 import { CustomizationService } from '../services/customization.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { combineLatest, tap } from 'rxjs';
+import { ColorblindnessEnum } from '../models/colorblindness.enum';
 
 @UntilDestroy({ checkProperties: true })
 @Directive({
@@ -21,10 +22,29 @@ export class VideoCustomizationDirective {
       this.customizationService.saturate$,
       this.customizationService.grayscale$,
       this.customizationService.invert$,
+      this.customizationService.colorblindness$,
+      this.customizationService.typeColorblindness$,
     ])
       .pipe(
-        tap(([brightness, contrast, saturate, grayscale, invert]) => {
-          this.elementRef.nativeElement.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) grayscale(${grayscale}%) invert(${invert}%)`;
+        tap(([brightness, contrast, saturate, grayscale, invert, colorblindness, typeColorblindness]) => {
+          let filler: string;
+          if (colorblindness) {
+            switch (typeColorblindness) {
+              case ColorblindnessEnum.TRITAN:
+                filler = "url('#tritanopia')";
+                break;
+              case ColorblindnessEnum.DEUTAN:
+                filler = ' ';
+                break;
+              case ColorblindnessEnum.PROTAN:
+                filler = "url('#tritanopia')";
+                break;
+            }
+          } else {
+            filler = '';
+          }
+
+          this.elementRef.nativeElement.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) grayscale(${grayscale}%) invert(${invert}%) ${filler}`;
         }),
         untilDestroyed(this),
       )

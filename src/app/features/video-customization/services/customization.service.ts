@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Customization } from '../models/customizations.interface';
 import { BehaviorSubject } from 'rxjs';
+import { ColorblindnessEnum } from "../models/colorblindness.enum";
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,9 @@ export class CustomizationService {
   public saturate$ = new BehaviorSubject<number>(100);
   public grayscale$ = new BehaviorSubject<number>(0);
   public invert$ = new BehaviorSubject<number>(0);
+
+  public colorblindness$ = new BehaviorSubject<boolean>(false);
+  public typeColorblindness$ = new BehaviorSubject<ColorblindnessEnum>(ColorblindnessEnum.TRITAN)
 
   public customizations: Customization[] = [
     {
@@ -39,4 +43,12 @@ export class CustomizationService {
       maxLength: 100,
     },
   ];
+
+  public resetSettings(): void {
+    this.brightness$.next(100);
+    this.contrast$.next(100);
+    this.saturate$.next(100);
+    this.grayscale$.next(0);
+    this.invert$.next(0);
+  }
 }
