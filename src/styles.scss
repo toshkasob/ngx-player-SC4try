@@ -1,0 +1,25 @@
+@import "assets/scss/reset";
+@import "assets/scss/vars";
+@import '@angular/cdk/overlay-prebuilt.css';
+
+@font-face {
+  font-family: 'Robot';
+  src: url('assets/fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+// Overlay backdrop styling
+.overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+// Overlay panel styling
+.overlay-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 20px;
+}

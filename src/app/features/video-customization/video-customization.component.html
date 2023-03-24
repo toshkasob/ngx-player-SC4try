@@ -1,0 +1,16 @@
+<div class="video-settings-modal" (mouseenter)="mouseenter()" (mouseleave)="closeSettings()">
+  <div class="setting-container">
+    <ng-container *ngFor="let item of customizationService.customizations">
+      <p class="setting-text">{{ item.title }}</p>
+      <app-input-range
+        class="setting-range"
+        (changes)="changeSetting(item.value, $event)"
+        [value]="item.value | async"
+        [maxLength]="item.maxLength"
+        title="Громкость"
+      ></app-input-range>
+      <p class="setting-text">{{ item.value | async }}</p>
+    </ng-container>
+  </div>
+  <button class="btn">Сброс</button>
+</div>

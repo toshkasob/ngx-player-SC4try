@@ -1,0 +1,29 @@
+.player-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.player-container {
+  width: 924px;
+  height: 520px;
+  background: var(--video-container-bg);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+}
+
+.white-text {
+  color: var(--white);
+  font-size: 14px;
+}

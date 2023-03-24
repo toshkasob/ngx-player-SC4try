@@ -1,0 +1,19 @@
+<div class="player-menu_item">
+  <span class="option-title" *ngIf="config.options?.length > 0; else titleAction">{{ config.title }}</span>
+  <ng-container *ngIf="config.options?.length > 0">
+    <ul class="custom_select_list">
+      <li
+        *ngFor="let item of config.options"
+        class="custom_option option-title"
+        [class.active]="currentValue === item.value"
+        (click)="selectedValue(item.value)"
+      >
+        {{ item.label }}
+      </li>
+    </ul>
+  </ng-container>
+</div>
+
+<ng-template #titleAction>
+  <span class="option-title" (click)="selectedValue()">{{ config.title }}</span>
+</ng-template>

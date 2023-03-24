@@ -1,0 +1,127 @@
+.svg-style {
+  width: 925px;
+  height: 520px;
+}
+
+
+
+
+/////////НОВОЕ С НАЧАЛА*////////////
+.video-controls-container {
+  margin:0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  transition: .3s ease-in-out;
+  &.play {
+    transform: translateY(100%);
+  }
+}
+
+.video-track {
+  width: 100%;
+  height: 6px;
+  margin-bottom: 5px;
+  &:hover {
+    transform: scaleY(1.8);
+  }
+  background-color: var(--video-track-bg);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  .timeline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    width: 0;
+    background-color: var(--progress-line);
+    z-index: 2;
+    transition: all 0.3s ease-out;
+  }
+  .buffered {
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+    background-color: var(--buffered-line);
+    height: 6px;
+    transition: all 0.3s ease-out;
+  }
+}
+
+.video-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.video-controls_block {
+  display: flex;
+  align-items: center;
+  cursor:pointer;
+  .video-control {
+    width:30px;
+    margin-right: 5px;
+    height: 30px;
+  }
+}
+
+// ICON
+
+.control-icon {
+  cursor: pointer;
+  path {
+    width: 24px;
+    height: 24px;
+    //pointer-events: none;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+// TIME
+.trackTime {
+  margin-left: 0.3rem;
+  color: var(--white);
+  font-size: 14px;
+  user-select: none;
+  line-height: 0;
+}
+
+.player-menu {
+  position: relative;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  &_list {
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    width: 100px;
+    background: var(--menu-list);
+    position: absolute;
+    bottom: 30px;
+    right: 0;
+    transition: all 0.3s ease;
+  }
+  &:hover {
+    .player-menu_list {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .settings {
+      transform: rotate(-75grad);
+    }
+  }
+  .settings {
+    transform: rotate(0);
+    transition: 0.3s;
+  }
+}

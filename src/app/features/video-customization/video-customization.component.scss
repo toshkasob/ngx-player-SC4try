@@ -1,0 +1,37 @@
+.video-settings-modal {
+  background: var(--customization-bg);
+  width: 310px;
+  height: 300px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.setting-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 33px);
+  grid-column-gap: 20px;
+  grid-row-gap: 5px;
+  align-items: center;
+  margin: 0 auto;
+  padding: 15px;
+  .setting-range {
+    margin: 0 10px;
+  }
+  .setting-text {
+    color: var(--white);
+  }
+}
+
+.btn {
+  border: 1px solid var(--white);
+  padding: 10px 20px;
+  color: var(--white);
+}

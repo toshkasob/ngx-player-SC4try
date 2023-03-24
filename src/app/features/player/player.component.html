@@ -1,0 +1,26 @@
+<div class="player-wrapper">
+  <div class="player-container" #playerContainer>
+    <video
+      appVideoCustomization
+      class="video-player"
+      #player
+      preload="metadata"
+      playsinline
+      (click)="player.paused ? player.play() : player.pause()"
+      [src]="(playerService.src$ | async)"
+      [volume]="(playerService.volume$ | async) / 100"
+    ></video>
+    <app-player-controls
+      (clickPlay)="player.paused ? player.play() : player.pause()"
+      (openCustomization)="toggleCustomization(true)"
+    ></app-player-controls>
+    <app-video-customization
+      *ngIf="isCustomizationOpen"
+      (close)="toggleCustomization(false)"
+    ></app-video-customization>
+  </div>
+
+
+</div>
+
+<!--[src]="(playerService.src$ | async) + '#t=0.1'"-->

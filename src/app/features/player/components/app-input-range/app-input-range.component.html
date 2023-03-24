@@ -1,0 +1,11 @@
+<div class="input-range-wrap">
+  <input
+    #input
+    type="range"
+    [max]="maxLength"
+    [title]="title"
+    (input)="emitValue($event)"
+    [value]="value"
+  />
+  <span class="input-range-span" [style.width]="value > 0 ? ((100 / (maxLength / +value))) + '%' : 0"></span>
+</div>

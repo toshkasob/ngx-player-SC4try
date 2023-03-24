@@ -1,0 +1,103 @@
+<div
+  class="video-controls-container"
+  [ngClass]="{ play: playerService.changeControlsStyle$ | async }"
+>
+  <div
+    class="video-track"
+    #timelineContainer
+    (click)="onTimelineMove($event, timeline, timelineContainer)"
+  >
+    <div
+      #timeline
+      class="timeline"
+      [style.width.%]="
+        ((playerService.currentTrackTime$ | async) / ((playerService.fullTrackTime$ | async) / 100)).toFixed(2)
+      "
+    ></div>
+    <div
+      #buffered
+      class="buffered"
+      [style.width.%]="playerService.progressTrackBuffer$ | async"
+    ></div>
+  </div>
+  <div class="video-controls">
+    <div class="video-controls_block">
+      <div class="video-control">
+        <svg
+          width="30"
+          height="30"
+          viewBox="0 0 24 24"
+          fill="white"
+          class="control-icon"
+          (click)="onClickPlay($event)"
+          [ngClass]="{ active: playerService.isPlaying$ | async }"
+        >
+          <path [attr.d]="(playerService.isPlaying$ | async) ? controls.pause : controls.play" />
+        </svg>
+      </div>
+      <p class="trackTime">
+        {{
+        ((playerService.currentTrackTime$ | async) | videoTime) +
+        ' / ' +
+        (playerService.fullTrackTime$ | async | videoTime)
+        }}
+      </p>
+    </div>
+
+    <div class="video-controls_block">
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        class="control-icon"
+        fill="white"
+        (click)="playerService.muteVolume()"
+      >
+        <path [attr.d]="controls.iconVolume" />
+      </svg>
+
+      <app-input-range
+        #inputVolume
+        (changes)="playerService.volume$.next($event)"
+        [value]="playerService.volume$ | async"
+        title="Громкость"
+      ></app-input-range>
+
+      <p (click)="openSettings()">FFFF</p>
+
+      <div class="video-control player-menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" class="control-icon settings" fill="white">
+          <path [attr.d]="controls.mdiCog" />
+        </svg>
+        <ul class="player-menu_list">
+          <app-select
+            *ngFor="let item of playerService.playerMenu"
+            [config]="item.selectConfig"
+            (selected)="doAction($event)"
+            [currentValue]="playerService.currentSpeed$ | async"
+          ></app-select>
+        </ul>
+      </div>
+
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        class="control-icon"
+        fill="white"
+        (click)="playerService.toggleFullScreen(isDocFullscreen)"
+      >
+        <path
+          [attr.d]="
+            (playerService.isFullscreenActive$ | async) && isDocFullscreen
+              ? controls.mdiFullscreenExit
+              : controls.mdiFullscreen
+          "
+        />
+      </svg>
+      <!--яркость-->
+      <!--      <input type='range' value='100' max='200' title='Громкость' class='video-hud__element video-hud__volume' id='video-hud__filters'>-->
+    </div>
+  </div>
+
+</div>
