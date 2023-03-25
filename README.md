@@ -1,27 +1,31 @@
 # NgxPlayer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
+## Предварительно необходимо установить:
+* nodejs
+* npm или yarn
+* @angular/cli
 
-## Development server
+Инструкция установки для Linux:
+1. `sudo apt-get install -y nodejs`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2. `sudo apt install npm` или `npm install --global yarn`
 
-## Code scaffolding
+3. `sudo npm install -g @angular/cli` 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Клонируем
+4. `git clone https://github.com/LikeBench-dev/ngx-player-SC4try.git`
 
-## Build
+## Запускаем
+#### Если установлен  `npm`
+5. В папке с плеером `npm install`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+6. `npm run start`
 
-## Running unit tests
+7. В браузере http://localhost:4200/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ #### Если установлен  `yarn`
+  5. В папке с плеером `yarn`
+  6. Запускаем `yarn start`
+  7. В браузере http://localhost:4200/
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+P.S. Обратить внимание на версию nodejs `node -v`  в терминале запуска приложения
