@@ -38,6 +38,7 @@ export class PlayerControlsComponent implements AfterViewInit {
   @ViewChild('inputVolume') inputVolume!: ElementRef<AppInputRangeComponent>;
 
   @Output() clickPlay = new EventEmitter();
+  @Output() moveOnTrack = new EventEmitter<void>();
   @Output() openCustomization = new EventEmitter<void>();
 
   @HostListener('document:fullscreenchange', ['$event'])
@@ -85,6 +86,8 @@ export class PlayerControlsComponent implements AfterViewInit {
     const mouseX = Math.floor(event.pageX - timeline.getBoundingClientRect().left);
     const progress = mouseX / (timelineContainer.offsetWidth / 100);
     this.playerService.timelineMove$.next(progress);
+
+    this.moveOnTrack.emit();
   }
 
   public doAction(selectedValue: EmitSelectedValue): void {
