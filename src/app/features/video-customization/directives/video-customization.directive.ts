@@ -34,14 +34,14 @@ export class VideoCustomizationDirective {
                 filler = "url('#tritanopia')";
                 break;
               case ColorblindnessEnum.DEUTAN:
-                filler = ' ';
+                filler = "url('#deuteranopia')";
                 break;
               case ColorblindnessEnum.PROTAN:
-                filler = "url('#tritanopia')";
+                filler = "url('#protanopia')";
                 break;
             }
           } else {
-            filler = '';
+            filler = "url('#trueColor')";
           }
 
           this.elementRef.nativeElement.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) grayscale(${grayscale}%) invert(${invert}%) ${filler}`;
