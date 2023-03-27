@@ -4,7 +4,7 @@ import { CustomizationService } from './services/customization.service';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ColorblindnessEnum } from './models/colorblindness.enum';
-import { EpilepsyProtectionEnum } from "./models/epilepsy-protection.enum";
+import { EpilepsyProtectionEnum, EpilepsyProtectionRUEnum } from "./models/epilepsy-protection.enum";
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -23,6 +23,8 @@ export class VideoCustomizationComponent implements OnInit {
   public epilepsyProtection: boolean = false;
   public typeEpilepsyProtection!: EpilepsyProtectionEnum;
   public epilepsyProtectionEnum = EpilepsyProtectionEnum;
+  public epilepsyProtectionRUEnum = EpilepsyProtectionRUEnum;
+
 
   constructor(public customizationService: CustomizationService) {}
 
@@ -65,16 +67,7 @@ export class VideoCustomizationComponent implements OnInit {
     behaviorSubject.next(event);
   }
 
-  public toggleActionWithProtection(): void {
-    let type: EpilepsyProtectionEnum;
-    switch (this.typeEpilepsyProtection) {
-      case EpilepsyProtectionEnum.CUT:
-        type = EpilepsyProtectionEnum.SLOWDOWN
-        break;
-      case EpilepsyProtectionEnum.SLOWDOWN:
-        type = EpilepsyProtectionEnum.CUT
-        break;
-    }
-    this.customizationService.typeEpilepsyProtection$.next(type);
+  public toggleActionWithProtection(value: EpilepsyProtectionEnum): void {
+    this.customizationService.typeEpilepsyProtection$.next(value);
   }
 }

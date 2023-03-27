@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Customization } from '../models/customizations.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ColorblindnessEnum } from '../models/colorblindness.enum';
 import { EpilepsyProtectionEnum } from '../models/epilepsy-protection.enum';
 
@@ -13,12 +13,15 @@ export class CustomizationService {
   public saturate$ = new BehaviorSubject<number>(100);
   public grayscale$ = new BehaviorSubject<number>(0);
   public invert$ = new BehaviorSubject<number>(0);
+  public blur$ = new BehaviorSubject<number>(0);
 
   public colorblindness$ = new BehaviorSubject<boolean>(false);
   public typeColorblindness$ = new BehaviorSubject<ColorblindnessEnum>(ColorblindnessEnum.TRITAN);
 
   public epilepsyProtection$ = new BehaviorSubject<boolean>(true);
-  public typeEpilepsyProtection$ = new BehaviorSubject<EpilepsyProtectionEnum>(EpilepsyProtectionEnum.CUT);
+  public typeEpilepsyProtection$ = new BehaviorSubject<EpilepsyProtectionEnum>(EpilepsyProtectionEnum.SKIP);
+  public showSkipControl$ = new BehaviorSubject<boolean>(false);
+  public doSkip = new Subject<void>();
 
   public indexTimeForSlowdown: number = 0;
 
@@ -51,8 +54,6 @@ export class CustomizationService {
   ];
 
   public mockTimeForSlowdown: { turnOn: number[]; turnOff: number[] } = {
-    // turnOn: [1.30, 6.30, 14.30],
-    // turnOff: [3.65, 9.65, 27.65],
     turnOn: [1, 6, 14],
     turnOff: [3, 9, 27],
   };
@@ -63,5 +64,6 @@ export class CustomizationService {
     this.saturate$.next(100);
     this.grayscale$.next(0);
     this.invert$.next(0);
+    this.blur$.next(0);
   }
 }

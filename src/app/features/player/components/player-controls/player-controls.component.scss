@@ -1,12 +1,11 @@
-.svg-style {
-  width: 925px;
-  height: 520px;
+:host .play {
+  ::ng-deep .skip-control-wrapper {
+    .skip-control {
+      transform: translateY(-230%);
+    }
+  }
 }
 
-
-
-
-/////////НОВОЕ С НАЧАЛА*////////////
 .video-controls-container {
   margin:0;
   position: absolute;

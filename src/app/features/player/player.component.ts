@@ -27,6 +27,7 @@ import { DOCUMENT } from '@angular/common';
 import { EpilepsyWarningComponent } from './components/epilepsy-warning/epilepsy-warning.component';
 import { DialogService } from '../dialog/dialog.service';
 import { CustomizationService } from '../video-customization/services/customization.service';
+import { EpilepsyProtectionEnum } from "../video-customization/models/epilepsy-protection.enum";
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -42,6 +43,8 @@ export class PlayerComponent implements AfterViewInit, OnChanges {
 
   public isCustomizationOpen = false;
   public isMoveOnTrack = false;
+
+  private typeEpilepsyProtection: EpilepsyProtectionEnum;
 
   constructor(
     public playerService: PlayerService,
@@ -94,6 +97,7 @@ export class PlayerComponent implements AfterViewInit, OnChanges {
         this.playerService.unsubscribeMouseMove();
         if (this.player.nativeElement.ended) {
           this.customizationService.indexTimeForSlowdown = 0;
+          this.customizationService.showSkipControl$.next(false);
         }
       }),
       untilDestroyed(this),
@@ -182,16 +186,14 @@ export class PlayerComponent implements AfterViewInit, OnChanges {
 
           //Включение опций
           if (currentTrackTime === turnOn[activeIndex]) {
-            // this.customizationService.colorblindness$.next(true);
-            // this.player.nativeElement.playbackRate = 0.6;
-            this.playerService.currentSpeed$.next(60);
+            this.useCustomization();
+            this.customizationService.showSkipControl$.next(true);
           }
 
           //Выключение опций
           if (turnOff[activeIndex] === currentTrackTime) {
-            // this.customizationService.colorblindness$.next(false);
-            // this.player.nativeElement.playbackRate = 1.0;
-            this.playerService.currentSpeed$.next(100);
+            this.useCustomization(false);
+            // this.customizationService.showSkipControl$.next(false);
             this.customizationService.indexTimeForSlowdown = activeIndex + 1;
           }
           return currentTrackTime;
@@ -209,23 +211,53 @@ export class PlayerComponent implements AfterViewInit, OnChanges {
               timeForSlowdown.turnOn[nearestIndex + 1] || Math.ceil(this.player.nativeElement.duration),
             )
           ) {
-            // this.customizationService.colorblindness$.next(false);
-
             this.customizationService.indexTimeForSlowdown =
               timeForSlowdown.turnOn.length === nearestIndex ? 0 : nearestIndex + 1;
-            // this.player.nativeElement.playbackRate = 1.0;
-            this.playerService.currentSpeed$.next(100);
+            this.useCustomization(false);
+            this.customizationService.showSkipControl$.next(false);
           } else {
-            // this.player.nativeElement.playbackRate = 0.6;
-            this.playerService.currentSpeed$.next(60);
-            // this.customizationService.colorblindness$.next(true);
+            this.useCustomization();
 
             this.customizationService.indexTimeForSlowdown = nearestIndex;
           }
           this.isMoveOnTrack = false;
         }),
+        untilDestroyed(this),
       )
       .subscribe();
+
+      this.customizationService.doSkip.pipe(
+        tap(() => {
+          this.player.nativeElement.currentTime =
+            this.customizationService.mockTimeForSlowdown.turnOff[this.customizationService.indexTimeForSlowdown];
+        }),
+        untilDestroyed(this),
+      ).subscribe();
+
+      this.customizationService.typeEpilepsyProtection$.pipe(
+        tap(value => {
+          this.typeEpilepsyProtection = value
+        }),
+        untilDestroyed(this),
+      ).subscribe()
+  }
+
+  private useCustomization(turnOn = true): void {
+    console.log(this.typeEpilepsyProtection);
+    switch (this.typeEpilepsyProtection) {
+      case EpilepsyProtectionEnum.SKIP:
+        break;
+      case EpilepsyProtectionEnum.FORCE_SKIP:
+        this.customizationService.blur$.next(turnOn? 20 : 0)
+        this.customizationService.doSkip.next();
+        break;
+      case EpilepsyProtectionEnum.SLOWDOWN:
+        this.playerService.currentSpeed$.next(turnOn? 60 : 100)
+        break;
+      case EpilepsyProtectionEnum.CUT:
+        this.customizationService.colorblindness$.next(turnOn)
+        break;
+    }
   }
 
   private between(x: number, min: number, max: number): boolean {

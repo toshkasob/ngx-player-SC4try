@@ -1,29 +1,50 @@
 <div class="video-settings-modal" (mouseenter)="mouseenter()" (mouseleave)="closeSettings()">
-  <div class="setting-container">
-    <ng-container *ngFor="let item of customizationService.customizations">
-      <p class="setting-text">{{ item.title }}</p>
-      <app-input-range
-        class="setting-range"
-        (changes)="changeSetting(item.value, $event)"
-        [value]="(item.value | async)!"
-        [maxLength]="item.maxLength || 100"
-        title="Громкость"
-      ></app-input-range>
-      <p class="setting-text">{{ item.value | async }}</p>
-    </ng-container>
-  </div>
-  <div class="colorblindness-wrapper" [class.active]="colorblindness">
-    <div class="colorblindness">
-      <p class="setting-text">Антидальтонизм</p>
-      <p
-        class="option-status"
-        [class.active]="colorblindness"
-        (click)="customizationService.colorblindness$.next(!colorblindness)"
-      >
-        {{ colorblindness ? 'Включено' : 'Выключено' }}
-      </p>
+  <div class="settings-general settings-item">
+    <div class="setting-container">
+      <ng-container *ngFor="let item of customizationService.customizations">
+        <p class="setting-text">{{ item.title }}</p>
+        <app-input-range
+          class="setting-range"
+          (changes)="changeSetting(item.value, $event)"
+          [value]="(item.value | async)!"
+          [maxLength]="item.maxLength || 100"
+          title="Громкость"
+        ></app-input-range>
+        <p class="setting-text">{{ item.value | async }}</p>
+      </ng-container>
     </div>
-    <div class="colorblindness" *ngIf="colorblindness">
+    <div class="colorblindness-container" [class.active]="colorblindness">
+      <div class="colorblindness">
+        <p class="setting-text">Антидальтонизм</p>
+        <p
+          class="option-status"
+          [class.active]="colorblindness"
+          (click)="customizationService.colorblindness$.next(!colorblindness)"
+        >
+          {{ colorblindness ? 'Включено' : 'Выключено' }}
+        </p>
+      </div>
+    </div>
+
+    <div class="epilepsy-container" [class.active]="epilepsyProtection">
+      <div class="epilepsy-protection">
+        <p class="setting-text">Защита от эпилепсии</p>
+        <p
+          class="option-status"
+          [class.active]="epilepsyProtection"
+          (click)="customizationService.epilepsyProtection$.next(!epilepsyProtection)"
+        >
+          {{ epilepsyProtection ? 'Включено' : 'Выключено' }}
+        </p>
+      </div>
+    </div>
+
+    <button (click)="customizationService.resetSettings()" class="btn">Сброс</button>
+  </div>
+  <div class="settings-colorblindness settings-item" *ngIf="customizationService.colorblindness$ | async">
+    <p class="settings-title">Настройки для дальтоников</p>
+    <p class="setting-text">Тип фильтра:</p>
+    <div class="colorblindness-type">
       <p
         class="colorblindness-text"
         [class.blue]="typeColorblindness === colorblindnessEnum.TRITAN"
@@ -47,31 +68,39 @@
       </p>
     </div>
   </div>
-
-  <div class="epilepsy-wrapper" [class.active]="epilepsyProtection">
-    <div class="epilepsy-protection">
-      <p class="setting-text">Защита от эпилепсии</p>
-      <p
-        class="option-status"
-        [class.active]="epilepsyProtection"
-        (click)="customizationService.epilepsyProtection$.next(!epilepsyProtection)"
-      >
-        {{ epilepsyProtection ? 'Включено' : 'Выключено' }}
-      </p>
-    </div>
-
-
-    <div class="epilepsy-protection" *ngIf="epilepsyProtection">
-      <p class="setting-text">Тип защиты</p>
-      <p
-        class="option-status"
-        [class.active]="typeEpilepsyProtection === epilepsyProtectionEnum.SLOWDOWN"
-        (click)="toggleActionWithProtection()"
-      >
-        {{ typeEpilepsyProtection | matchingTypeEpilepsy }} кадра
-      </p>
-    </div>
+  <div class="settings-epilepsy settings-item" *ngIf="customizationService.epilepsyProtection$ | async">
+    <p class="settings-title">Настройки для эпилептиков</p>
+      <p class="setting-text">Тип защиты:</p>
+      <div class="epilepsy-protection-type">
+        <p
+          class="option-status"
+          [class.active]="typeEpilepsyProtection === epilepsyProtectionEnum.CUT"
+          (click)="toggleActionWithProtection(epilepsyProtectionEnum.CUT)"
+        >
+          {{ epilepsyProtectionRUEnum.CUT }}
+        </p>
+        <p
+          class="option-status"
+          [class.active]="typeEpilepsyProtection === epilepsyProtectionEnum.SLOWDOWN"
+          (click)="toggleActionWithProtection(epilepsyProtectionEnum.SLOWDOWN)"
+        >
+          {{ epilepsyProtectionRUEnum.SLOWDOWN }}
+        </p>
+        <p
+          class="option-status"
+          [class.active]="typeEpilepsyProtection === epilepsyProtectionEnum.SKIP"
+          (click)="toggleActionWithProtection(epilepsyProtectionEnum.SKIP)"
+        >
+          {{ epilepsyProtectionRUEnum.SKIP }}
+        </p>
+        <p
+          class="option-status"
+          [class.active]="typeEpilepsyProtection === epilepsyProtectionEnum.FORCE_SKIP"
+          (click)="toggleActionWithProtection(epilepsyProtectionEnum.FORCE_SKIP)"
+        >
+          {{ epilepsyProtectionRUEnum.FORCE_SKIP }}
+        </p>
+      </div>
   </div>
 
-  <button (click)="customizationService.resetSettings()" class="btn">Сброс</button>
 </div>

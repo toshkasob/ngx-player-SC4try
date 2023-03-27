@@ -2,6 +2,7 @@
   class="video-controls-container"
   [ngClass]="{ play: playerService.changeControlsStyle$ | async }"
 >
+  <ng-container *skipControl></ng-container>
   <div
 
     class="video-track"

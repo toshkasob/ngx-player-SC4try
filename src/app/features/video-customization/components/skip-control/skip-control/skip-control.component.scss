@@ -1,0 +1,35 @@
+.skip-control {
+  position: absolute;
+  min-width: 132px;
+  right: 10px;
+  bottom: 100px;
+  background: var(--menu-list);
+  color: var(--white);
+  display: flex;
+  height: 30px;
+  align-items: center;
+  padding: 0 5px 0 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0.8;
+  border: 1px solid var(--white);
+  transition: .3s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+  .control-label {
+    user-select: none;
+  }
+  &.warning {
+    border: 1px solid var(--wrong);
+    .control-icon {
+      width: 26px;
+      height: 26px;
+      fill: var(--wrong);
+      margin-left: 5px;
+    }
+  }
+  .control-icon {
+    fill: var(--white);
+  }
+}
