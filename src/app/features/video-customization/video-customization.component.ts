@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Customization } from './models/customizations.interface';
 import { CustomizationService } from './services/customization.service';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
-import { ColorblindnessEnum } from "./models/colorblindness.enum";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ColorblindnessEnum } from './models/colorblindness.enum';
+import { EpilepsyProtectionEnum } from "./models/epilepsy-protection.enum";
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -17,27 +18,34 @@ export class VideoCustomizationComponent implements OnInit {
 
   public colorblindnessEnum = ColorblindnessEnum;
 
-  public colorblindness!: boolean;
+  public colorblindness: boolean = false;
   public typeColorblindness!: ColorblindnessEnum;
   public epilepsyProtection: boolean = false;
-  public actionCutWithProtection: boolean = false;
-
+  public typeEpilepsyProtection!: EpilepsyProtectionEnum;
+  public epilepsyProtectionEnum = EpilepsyProtectionEnum;
 
   constructor(public customizationService: CustomizationService) {}
 
   public ngOnInit(): void {
-    this.customizationService.colorblindness$.pipe(untilDestroyed(this))
-      .subscribe(value => {
-        this.colorblindness = value;
-      })
+    this.customizationService.colorblindness$.pipe(untilDestroyed(this)).subscribe(value => {
+      this.colorblindness = value;
+    });
 
-    this.customizationService.typeColorblindness$.pipe(
-      distinctUntilChanged(),
-      untilDestroyed(this),
-    )
+    this.customizationService.typeColorblindness$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
       .subscribe(value => {
         this.typeColorblindness = value;
-      })
+      });
+
+    this.customizationService.epilepsyProtection$.pipe(untilDestroyed(this)).subscribe(value => {
+      this.epilepsyProtection = value;
+    });
+
+    this.customizationService.typeEpilepsyProtection$
+      .pipe(distinctUntilChanged(), untilDestroyed(this))
+      .subscribe(value => {
+        this.typeEpilepsyProtection = value;
+      });
   }
 
   public isMouseEnter = false;
@@ -57,11 +65,16 @@ export class VideoCustomizationComponent implements OnInit {
     behaviorSubject.next(event);
   }
 
-  public toggleProtection(): void {
-    this.epilepsyProtection = !this.epilepsyProtection;
-  }
-
   public toggleActionWithProtection(): void {
-    this.actionCutWithProtection = !this.actionCutWithProtection;
+    let type: EpilepsyProtectionEnum;
+    switch (this.typeEpilepsyProtection) {
+      case EpilepsyProtectionEnum.CUT:
+        type = EpilepsyProtectionEnum.SLOWDOWN
+        break;
+      case EpilepsyProtectionEnum.SLOWDOWN:
+        type = EpilepsyProtectionEnum.CUT
+        break;
+    }
+    this.customizationService.typeEpilepsyProtection$.next(type);
   }
-  }
+}

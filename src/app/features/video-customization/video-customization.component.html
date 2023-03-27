@@ -54,7 +54,7 @@
       <p
         class="option-status"
         [class.active]="epilepsyProtection"
-        (click)="toggleProtection()"
+        (click)="customizationService.epilepsyProtection$.next(!epilepsyProtection)"
       >
         {{ epilepsyProtection ? 'Включено' : 'Выключено' }}
       </p>
@@ -65,10 +65,10 @@
       <p class="setting-text">Тип защиты</p>
       <p
         class="option-status"
-        [class.active]="actionCutWithProtection"
+        [class.active]="typeEpilepsyProtection === epilepsyProtectionEnum.SLOWDOWN"
         (click)="toggleActionWithProtection()"
       >
-        {{ actionCutWithProtection ? 'Вырезание' : 'Замедление' }} кадра
+        {{ typeEpilepsyProtection | matchingTypeEpilepsy }} кадра
       </p>
     </div>
   </div>

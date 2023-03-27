@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Customization } from '../models/customizations.interface';
 import { BehaviorSubject } from 'rxjs';
-import { ColorblindnessEnum } from "../models/colorblindness.enum";
+import { ColorblindnessEnum } from '../models/colorblindness.enum';
+import { EpilepsyProtectionEnum } from '../models/epilepsy-protection.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,12 @@ export class CustomizationService {
   public invert$ = new BehaviorSubject<number>(0);
 
   public colorblindness$ = new BehaviorSubject<boolean>(false);
-  public typeColorblindness$ = new BehaviorSubject<ColorblindnessEnum>(ColorblindnessEnum.TRITAN)
+  public typeColorblindness$ = new BehaviorSubject<ColorblindnessEnum>(ColorblindnessEnum.TRITAN);
+
+  public epilepsyProtection$ = new BehaviorSubject<boolean>(true);
+  public typeEpilepsyProtection$ = new BehaviorSubject<EpilepsyProtectionEnum>(EpilepsyProtectionEnum.CUT);
+
+  public indexTimeForSlowdown: number = 0;
 
   public customizations: Customization[] = [
     {
@@ -43,6 +49,13 @@ export class CustomizationService {
       maxLength: 100,
     },
   ];
+
+  public mockTimeForSlowdown: { turnOn: number[]; turnOff: number[] } = {
+    // turnOn: [1.30, 6.30, 14.30],
+    // turnOff: [3.65, 9.65, 27.65],
+    turnOn: [1, 6, 14],
+    turnOff: [3, 9, 27],
+  };
 
   public resetSettings(): void {
     this.brightness$.next(100);

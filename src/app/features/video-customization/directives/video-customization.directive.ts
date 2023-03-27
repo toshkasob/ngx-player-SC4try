@@ -9,7 +9,7 @@ import { ColorblindnessEnum } from '../models/colorblindness.enum';
   selector: '[appVideoCustomization]',
 })
 export class VideoCustomizationDirective {
-  constructor(private elementRef: ElementRef, public customizationService: CustomizationService) {
+  constructor(private elementRef: ElementRef, private customizationService: CustomizationService) {
     if (this.elementRef) {
       this.initStreams();
     }
