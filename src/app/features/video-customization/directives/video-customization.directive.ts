@@ -9,7 +9,7 @@ import { ColorblindnessEnum } from '../models/colorblindness.enum';
   selector: '[appVideoCustomization]',
 })
 export class VideoCustomizationDirective {
-  constructor(private elementRef: ElementRef, public customizationService: CustomizationService) {
+  constructor(private elementRef: ElementRef, private customizationService: CustomizationService) {
     if (this.elementRef) {
       this.initStreams();
     }
@@ -24,9 +24,10 @@ export class VideoCustomizationDirective {
       this.customizationService.invert$,
       this.customizationService.colorblindness$,
       this.customizationService.typeColorblindness$,
+      this.customizationService.blur$,
     ])
       .pipe(
-        tap(([brightness, contrast, saturate, grayscale, invert, colorblindness, typeColorblindness]) => {
+        tap(([brightness, contrast, saturate, grayscale, invert, colorblindness, typeColorblindness, blur]) => {
           let filler: string;
           if (colorblindness) {
             switch (typeColorblindness) {
@@ -44,7 +45,7 @@ export class VideoCustomizationDirective {
             filler = "url('#trueColor')";
           }
 
-          this.elementRef.nativeElement.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) grayscale(${grayscale}%) invert(${invert}%) ${filler}`;
+          this.elementRef.nativeElement.style.filter = `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturate}%) grayscale(${grayscale}%) invert(${invert}%) blur(${blur}px) ${filler}`;
         }),
         untilDestroyed(this),
       )

@@ -1,0 +1,20 @@
+<div
+  class="skip-control"
+  (click)="skip()"
+  [class.warning]="typeControl === typeSkipControl.WARNING">
+  <ng-container *ngIf="!loading; else spinner">
+    <p class="control-label">{{ label }}</p>
+    <svg
+      width="30"
+      height="30"
+      viewBox="0 0 24 24"
+      class="control-icon"
+    >
+      <path [attr.d]="(typeControl === typeSkipControl.WARNING) ? warning_svg : action_svg" />
+    </svg>
+  </ng-container>
+</div>
+
+<ng-template #spinner>
+  <spinner></spinner>
+</ng-template>

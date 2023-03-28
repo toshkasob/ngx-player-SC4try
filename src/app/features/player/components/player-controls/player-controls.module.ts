@@ -9,6 +9,7 @@ import { PlayerSettingsComponent } from '../player-settings/player-settings.comp
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { VideoTimePipe } from '../../pipes/video-time.pipe';
 import { AppInputRangeModule } from '../app-input-range/app-input-range.module';
+import { VideoCustomizationModule } from "../../../video-customization/video-customization.module";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,6 @@ import { AppInputRangeModule } from '../app-input-range/app-input-range.module';
     VideoTimePipe,
   ],
   exports: [PlayerControlsComponent, VideoTimePipe],
-  imports: [CommonModule, DialogModule, CdkOverlayOrigin, AppInputRangeModule],
+  imports: [CommonModule, DialogModule, CdkOverlayOrigin, AppInputRangeModule, VideoCustomizationModule],
 })
 export class PlayerControlsModule {}

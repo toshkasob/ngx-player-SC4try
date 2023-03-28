@@ -11,6 +11,7 @@
       [volume]="(playerService.volume$ | async)! / 100"
     ></video>
     <app-player-controls
+      (moveOnTrack)="isMoveOnTrack = true"
       (clickPlay)="player.paused ? player.play() : player.pause()"
       (openCustomization)="toggleCustomization(true)"
     ></app-player-controls>
@@ -20,7 +21,6 @@
   <p (click)="openSettings()">Открыть модалку</p>
 </div>
 
-<!--[src]="(playerService.src$ | async) + '#t=0.1'"-->
 <svg [style.display]="'none'">
   <filter id="deuteranopia" color-interpolation-filters="linearRGB">
     <feColorMatrix

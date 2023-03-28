@@ -1,6 +1,6 @@
 .video-settings-modal {
   background: var(--customization-bg);
-  width: 310px;
+  min-width: 310px;
   min-height: 330px;
   height: auto;
   //height: 330px;
@@ -10,7 +10,7 @@
   top: 5px;
   z-index: 2;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
@@ -24,7 +24,7 @@
   grid-row-gap: 5px;
   align-items: center;
   margin: 0 auto;
-  padding: 15px 15px 0 15px;
+
   .setting-range {
     margin: 0 10px;
   }
@@ -33,7 +33,7 @@
   color: var(--white);
 }
 
-.colorblindness-wrapper, .epilepsy-wrapper {
+.colorblindness-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -43,26 +43,85 @@
   &.active {
     border: 1px solid var(--mune-item-hover);
     padding: 10px 0;
-    .colorblindness:first-child, .epilepsy-protection:first-child {
+    .colorblindness:first-child {
       margin-bottom: 10px;
     }
   }
+}
+
+.epilepsy-container, .colorblindness-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 0 10px 0;
 }
 
 .colorblindness-wrapper.active {
   margin-bottom: 10px;
 }
 
+.settings-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 330px;
+  height: auto;
+  min-width: 200px;
+  max-width: 310px;
+  //height: 100%;
+  padding: 15px 15px 0 15px;
+  margin-left: 10px;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background: var(--buffered-line);
+    top: 0;
+    right: -5px;
+  }
+  &:first-child {
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.settings-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--white);
+  //margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.settings-epilepsy {
+
+}
+
+.epilepsy-protection-type, .colorblindness-type {
+  padding: 10px 0;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+
 .colorblindness, .epilepsy-protection {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 0 15px;
+  //padding: 0 15px;
+  margin-top: 7px;
 }
 
 .colorblindness-text {
   color: var(--white);
   cursor: pointer;
+  padding-bottom: 10px;
   &.blue {
     color: var(--blue);
   }
@@ -77,6 +136,7 @@
 .option-status {
   color: var(--wrong);
   cursor: pointer;
+  padding-bottom: 10px;
   &.active {
     color: var(--success);
   }

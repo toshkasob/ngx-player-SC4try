@@ -2,7 +2,9 @@
   class="video-controls-container"
   [ngClass]="{ play: playerService.changeControlsStyle$ | async }"
 >
+  <ng-container *skipControl></ng-container>
   <div
+
     class="video-track"
     #timelineContainer
     (click)="onTimelineMove($event, timeline, timelineContainer)"
@@ -11,14 +13,16 @@
       #timeline
       class="timeline"
       [style.width.%]="
-        ((playerService.currentTrackTime$ | async)! / ((playerService.fullTrackTime$ | async)! / 100)).toFixed(2)
+        ((playerService.currentTrackTime$ | async) / ((playerService.fullTrackTime$ | async) / 100)).toFixed(2)
       "
     ></div>
     <div
-      #buffered
       class="buffered"
       [style.width.%]="playerService.progressTrackBuffer$ | async"
     ></div>
+    <ng-container
+      *unwantedContent="((playerService.fullTrackTime$ | async) / 100).toFixed(2)"
+    ></ng-container>
   </div>
   <div class="video-controls">
     <div class="video-controls_block">

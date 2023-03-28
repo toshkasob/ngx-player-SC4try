@@ -1,0 +1,10 @@
+.unwanted-content {
+  z-index: 2;
+  top: 0;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  background-color: var(--warrning-content);
+  height: 6px;
+  transition: all 0.3s ease-out;
+}
