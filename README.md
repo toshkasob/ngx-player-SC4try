@@ -17,33 +17,33 @@
 4. `sudo apt-get install python3-pip`
 
 ## Клонируем
-4. `git clone https://github.com/LikeBench-dev/ngx-player-SC4try.git`
+5. `git clone https://github.com/LikeBench-dev/ngx-player-SC4try.git`
 
 ## Запускаем
 #### Если установлен  `npm`
-5. В папке с плеером `npm install`
+6. В папке с плеером `npm install`
 
-6. `npm run start`
+7. `npm run start`
 
-7. В браузере http://localhost:4200/
+8. В браузере http://localhost:4200/
 
  #### Если установлен  `yarn`
-  5. В папке с плеером `yarn`
-  6. Запускаем `yarn start`
-  7. В браузере http://localhost:4200/
+  6. В папке с плеером `yarn`
+  7. Запускаем `yarn start`
+  8. В браузере http://localhost:4200/
 
 P.S. Обратить внимание на версию nodejs `node -v`  в терминале запуска приложения
 
 
 ## Готовим сервер
 
-* Рекомендуется использование virtual environments
+   Рекомендуется использование virtual environments
      В папке с плеером `python -m venv ./videoserver/venvBackend`
      `source ./videoserver/venvBackend/bin/activate`
 
   9. Обновляем пакеты в соответствии с requirements.txt
      `python -m pip install -r ./videoserver/requirements.txt`
 
-  10. Запускаем сервер для бэкенда, который слушает localhost:4200
+  10. Запускаем сервер бэкенд на localhost:8000, который слушает localhost:4200
      `./videoserver/manage.py migrate`
      `./videoserver/manage.py runserver`
